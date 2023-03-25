@@ -2,11 +2,17 @@ package com.example.Library.entity;
 
 import com.example.Library.enums.Status;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,10 +21,11 @@ public class Book {
     private String shortDescription;
     private String nameOfBook;
     private String vendorCode;
+    @Enumerated(value = EnumType.STRING)
     private Status status;
     private LocalDate issueDate;
     private LocalDate deliveryDate;
-
+    private String genre;
     @ManyToOne
     private Library library;
 
