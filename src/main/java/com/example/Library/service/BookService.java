@@ -1,10 +1,13 @@
 package com.example.Library.service;
 
+import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.BookInfoDTO;
 import com.example.Library.entity.Book;
 import com.example.Library.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +35,16 @@ public class BookService {
 
     public List<Book> findAll() {
         return bookRepository.findAll();
+    }
+    public List<BookDTO> findAllBooks(){
+        List<Book> bookList = bookRepository.findAll();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (Book book:bookList) {
+            BookDTO bookDTO = new BookDTO(book.getId(),book.getAuthor(),book.getNameOfBook(),
+                    book.getStatus(),book.getReader());
+            bookDTOList.add(bookDTO);
+        }
+        return bookDTOList;
     }
 
     public Book save(Book book) {

@@ -9,8 +9,6 @@ import com.example.Library.repository.LibraryRepository;
 import com.example.Library.repository.ReaderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,4 +56,5 @@ public class LibraryService {
         return "Читатель " + reader.getUserName() + " вернул книгу "+
                 reader.getBooks().get(Math.toIntExact(bookId)).getNameOfBook();
     }
+
 }
