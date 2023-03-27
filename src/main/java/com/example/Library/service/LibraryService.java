@@ -4,6 +4,7 @@ import com.example.Library.entity.Book;
 import com.example.Library.entity.Library;
 import com.example.Library.entity.Reader;
 import com.example.Library.enums.Status;
+import com.example.Library.repository.BookRepository;
 import com.example.Library.repository.LibraryRepository;
 import com.example.Library.repository.ReaderRepository;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class LibraryService {
-    ReaderService readerService;
-    BookService bookService;
+    BookRepository bookRepository;
+    ReaderRepository readerRepository;
     LibraryRepository libraryRepository;
     public Library findById (Long id) {
         Optional<Library> library = libraryRepository.findById(id);
@@ -30,30 +31,31 @@ public class LibraryService {
     }
 
     public String issueOfTheBook (Long readerId,Long bookId) {
-        Book book = bookService.getById(bookId);
-        book.setStatus(Status.NOT_AVAILABLE);
-        Reader reader = readerService.getById(readerId);
+      Book book = bookRepository.findById(bookId).orElseThrow(() ->
+              new IllegalArgumentException("Invalid book ID"));
+      Reader reader = readerRepository.findById(readerId).orElseThrow(()->
+              new IllegalArgumentException("Invalid reader ID"));
+        if (book.getReader() != null) {
+            throw new IllegalArgumentException("Book is already taken");
+        }
         book.setReader(reader);
-        List<Book> bookList = new ArrayList<>();
+        book.setStatus(Status.NOT_AVAILABLE);
+        bookRepository.save(book);
+        List<Book> bookList = reader.getBooks();
         bookList.add(book);
         reader.setBooks(bookList);
-        bookService.update(book);
-        readerService.update(reader);
+        readerRepository.save(reader);
         return "Читатель " + reader.getUserName() + " взял книгу "+book.getNameOfBook()+".";
     }
     public String returnOfTheBook (Long readerId , Long bookId) {
-        Book book = bookService.getById(bookId);
+        Book book = bookRepository.findById(bookId).orElseThrow(() ->
+                new IllegalArgumentException("Invalid book ID"));
+        Reader reader = readerRepository.findById(readerId).orElseThrow(()->
+                new IllegalArgumentException("Invalid reader ID"));
         book.setStatus(Status.AVAILABLE);
-        Reader reader = readerService.getById(readerId);
-        for (int i = 0; i < reader.getBooks().size(); i++) {
-          if (bookId == reader.getBooks().get(i).getId()){
-              reader.getBooks().get(i).setStatus(Status.AVAILABLE);
-
-          }
-          readerService.update(reader);
-        }
-        bookService.update(book);
-
-        return "Читатель " + reader.getUserName() + " вернул книгу "+ book.getNameOfBook();
+        book.setReader(null);
+        bookRepository.save(book);
+        return "Читатель " + reader.getUserName() + " вернул книгу "+
+                reader.getBooks().get(Math.toIntExact(bookId)).getNameOfBook();
     }
 }
