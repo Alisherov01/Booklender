@@ -2,7 +2,11 @@ package com.example.Library.service;
 
 import com.example.Library.entity.Reader;
 import com.example.Library.repository.ReaderRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,41 +17,49 @@ import java.util.Optional;
 public class ReaderService {
     ReaderRepository readerRepository;
 
-    public Reader getById(Long id) {
-        Optional<Reader> reader = readerRepository.findById(id);
-        Reader reader1 = new Reader();
-        reader1.setId(reader.get().getId());
-        reader1.setFullName(reader.get().getFullName());
-        reader1.setEmail(reader.get().getEmail());
-        reader1.setUserName(reader.get().getUserName());
-        reader1.setPassword(reader.get().getPassword());
-        reader1.setAuthStatus(reader.get().getAuthStatus());
-
-        return reader1;
+    public List<Reader> getAll() throws DataAccessException {
+        try {
+            return readerRepository.findAll();
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get all Readers", e){};
+        }
     }
 
-    public List<Reader> findAll() {
-        return readerRepository.findAll();
+    public Reader getById(Long id) throws DataAccessException {
+        try {
+            return readerRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get user with id " + id, e){};
+        }
     }
 
-    public Reader save(Reader reader) {
-        return readerRepository.save(reader);
+    public Reader save(Reader reader) throws DataAccessException {
+       try {
+           return readerRepository.save(reader);
+       }catch (DataAccessException e) {
+           throw new DataAccessException("Failed to create user", e){};       }
     }
 
-    public Reader update(Reader reader) {
-        Reader reader1 = readerRepository.findById(reader.getId()).get();
-        reader1.setId(reader.getId());
-        reader1.setFullName(reader.getFullName());
-        reader1.setEmail(reader.getEmail());
-        reader1.setUserName(reader.getUserName());
-        reader1.setPassword(reader.getPassword());
-        reader1.setAuthStatus(reader.getAuthStatus());
-        reader1.setBooks(reader.getBooks());
-        return readerRepository.save(reader1);
-    }
-    public String  delete (Long id) {
-        readerRepository.deleteById(id);
-        return "Delete";
+    public Reader update(Reader reader) throws DataAccessException {
+        try {
+           return readerRepository.save(reader);
 
+        } catch (OptimisticLockException ex) {
+            throw new OptimisticLockException("Error occurred while updating user: " + ex.getMessage()) {};
+        }
+    }
+    public String  delete (Long id) throws Exception {
+        try {
+            readerRepository.deleteById(id);
+            return "Reader delete";
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to delete object with id " + id, e) {
+            };
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Object with id " + id + " not found", e);
+        } catch (Exception e) {
+            throw new Exception("Failed to delete object with id " + id, e);
+        }
     }
 }

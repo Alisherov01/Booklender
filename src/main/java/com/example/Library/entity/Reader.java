@@ -22,6 +22,10 @@ public class Reader {
     private String password;
     @Enumerated(value = EnumType.STRING)
     private AuthStatus authStatus;
+    @ManyToOne
+    private History history;
     @OneToMany
     private List<Book> books;
+    @OneToMany
+    private List<Book> booksRead;
 }

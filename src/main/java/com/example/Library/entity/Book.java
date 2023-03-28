@@ -23,12 +23,11 @@ public class Book {
     private String vendorCode;
     @Enumerated(value = EnumType.STRING)
     private Status status;
-    private LocalDate issueDate;
-    private LocalDate deliveryDate;
     private String genre;
     @ManyToOne
     private Library library;
-
+    @ManyToOne
+    private History history;
     @ManyToOne
     private Reader reader;
 }

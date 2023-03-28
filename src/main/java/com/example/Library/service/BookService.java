@@ -3,8 +3,12 @@ package com.example.Library.service;
 import com.example.Library.dto.BookDTO;
 import com.example.Library.dto.BookInfoDTO;
 import com.example.Library.entity.Book;
+import com.example.Library.entity.Reader;
 import com.example.Library.repository.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,35 +20,17 @@ import java.util.Optional;
 public class BookService {
     BookRepository bookRepository;
 
-    public Book getById(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        Book book2 = new Book();
-        book2.setId(book.get().getId());
-        book2.setNameOfBook(book.get().getNameOfBook());
-        book2.setAuthor(book.get().getAuthor());
-        book2.setLibrary(book.get().getLibrary());
-        book2.setReader(book.get().getReader());
-        book2.setGenre(book.get().getGenre());
-        book2.setStatus(book.get().getStatus());
-        book2.setDeliveryDate(book.get().getDeliveryDate());
-        book2.setIssueDate(book.get().getIssueDate());
-        book2.setShortDescription(book.get().getShortDescription());
-        book2.setVendorCode(book.get().getVendorCode());
-        return book2;
+    public Book getById(Long id) throws DataAccessException {
+        try {
+            return bookRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Book with id " + id + " not found"));
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get book with id " + id, e){};
+        }
     }
 
     public List<Book> findAll() {
         return bookRepository.findAll();
-    }
-    public List<BookDTO> findAllBooks(){
-        List<Book> bookList = bookRepository.findAll();
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        for (Book book:bookList) {
-            BookDTO bookDTO = new BookDTO(book.getId(),book.getAuthor(),book.getNameOfBook(),
-                    book.getStatus(),book.getReader());
-            bookDTOList.add(bookDTO);
-        }
-        return bookDTOList;
     }
 
     public Book save(Book book) {
@@ -52,18 +38,12 @@ public class BookService {
     }
 
     public Book update(Book book) {
-        Book book1 = bookRepository.findById(book.getId()).get();
-        if (book1.getNameOfBook() == null) book1.setNameOfBook(book.getNameOfBook());
-        if (book1.getAuthor() == null) book1.setAuthor(book.getAuthor());
-        if (book1.getLibrary() == null) book1.setLibrary(book.getLibrary());
-        if (book1.getReader() == null) book1.setReader(book.getReader());
-        if (book1.getGenre() == null) book1.setGenre(book.getGenre());
-        if (book1.getStatus() == null) book1.setStatus(book.getStatus());
-        if (book1.getDeliveryDate() == null) book1.setDeliveryDate(book.getDeliveryDate());
-        if (book1.getIssueDate() == null) book1.setIssueDate(book.getIssueDate());
-        if (book1.getShortDescription() == null) book1.setShortDescription(book.getShortDescription());
-        if (book1.getVendorCode() == null) book1.setVendorCode(book.getVendorCode());
-        return bookRepository.save(book1);
+        try {
+            return bookRepository.save(book);
+
+        } catch (OptimisticLockException ex) {
+            throw new OptimisticLockException("Error occurred while updating book: " + ex.getMessage()) {};
+        }
     }
 
     public String delete(Long id) {
