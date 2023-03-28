@@ -16,5 +16,5 @@ public class BookDTO {
     private String author;
     private String nameOfBook;
     private Status status;
-    private Reader reader;
+    //private Reader reader;
 }

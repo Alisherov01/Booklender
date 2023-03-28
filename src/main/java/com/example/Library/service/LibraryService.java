@@ -1,6 +1,6 @@
 package com.example.Library.service;
 
-import com.example.Library.entity.Book;
+/*import com.example.Library.entity.Book;
 import com.example.Library.entity.Library;
 import com.example.Library.entity.Reader;
 import com.example.Library.enums.Status;
@@ -10,9 +10,9 @@ import com.example.Library.repository.ReaderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional;*/
 
-@Service
+/*@Service
 @AllArgsConstructor
 public class LibraryService {
     BookRepository bookRepository;
@@ -57,4 +57,4 @@ public class LibraryService {
                 reader.getBooks().get(Math.toIntExact(bookId)).getNameOfBook();
     }
 
-}
+}*/

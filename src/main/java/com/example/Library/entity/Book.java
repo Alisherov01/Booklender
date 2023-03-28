@@ -5,30 +5,38 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String author;
-    private String shortDescription;
-    private String nameOfBook;
+    private String description;
+    private String name;
     private String vendorCode;
+
     @Enumerated(value = EnumType.STRING)
     private Status status;
-    private LocalDate issueDate;
-    private LocalDate deliveryDate;
-    private String genre;
-    @ManyToOne
-    private Library library;
 
-    @ManyToOne
-    private Reader reader;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate issueDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deliveryDate;
+
+    private String genre;
+
+    @OneToMany(mappedBy = "book")
+    private List<Borrowing> borrowings;
+
+
 }

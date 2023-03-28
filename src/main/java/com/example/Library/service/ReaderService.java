@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ReaderService {
-    ReaderRepository readerRepository;
+    private final ReaderRepository readerRepository;
 
     public Reader getById(Long id) {
         Optional<Reader> reader = readerRepository.findById(id);
@@ -42,10 +42,10 @@ public class ReaderService {
         reader1.setUserName(reader.getUserName());
         reader1.setPassword(reader.getPassword());
         reader1.setAuthStatus(reader.getAuthStatus());
-        reader1.setBooks(reader.getBooks());
+        //reader1.setBooks(reader.getBooks());
         return readerRepository.save(reader1);
     }
-    public String  delete (Long id) {
+    public String delete (Long id) {
         readerRepository.deleteById(id);
         return "Delete";
 
