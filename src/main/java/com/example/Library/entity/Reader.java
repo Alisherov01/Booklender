@@ -1,11 +1,12 @@
 package com.example.Library.entity;
 
 import com.example.Library.enums.AuthStatus;
-import jakarta.persistence.*;
+import com.example.Library.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class Reader {
     private Long id;
     private String fullName;
     private String email;
-    private String userName;
+    private String login;
     private String password;
     @Enumerated(value = EnumType.STRING)
     private AuthStatus authStatus;
@@ -26,6 +27,8 @@ public class Reader {
     private History history;
     @OneToMany
     private List<Book> books;
+    @Enumerated(value = EnumType.STRING)
+    private Roles role;
     @OneToMany
     private List<Book> booksRead;
 }

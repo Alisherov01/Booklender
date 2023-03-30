@@ -2,10 +2,11 @@ package com.example.Library.service;
 
 import com.example.Library.entity.History;
 import com.example.Library.repository.HistoryRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor

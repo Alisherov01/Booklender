@@ -9,11 +9,11 @@ import com.example.Library.repository.BookRepository;
 import com.example.Library.repository.HistoryRepository;
 import com.example.Library.repository.LibraryRepository;
 import com.example.Library.repository.ReaderRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class LibraryService {
             history.setReaders(reader);
             history.setIssueDate(LocalDate.now());
             historyRepository.save(history);
-            return "Читатель " + reader.getUserName() + " взял книгу " + book.getNameOfBook() + ".";
+            return "Читатель " + reader.getFullName() + " взял книгу " + book.getNameOfBook() + ".";
         } catch (DataAccessException e) {
             throw new DataAccessException(e.getMessage()) {
             };
@@ -88,7 +88,7 @@ public class LibraryService {
             reader.setBooks(null);
             history.setDeliveryDate(LocalDate.now());
             historyRepository.save(history);
-            return "Читатель " + reader.getUserName() + " вернул книгу "
+            return "Читатель " + reader.getFullName() + " вернул книгу "
                     + bookName;
         } catch (DataAccessException e) {
             throw new DataAccessException(e.getMessage()) {

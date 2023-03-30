@@ -2,12 +2,12 @@ package com.example.Library.service;
 
 import com.example.Library.entity.Reader;
 import com.example.Library.repository.ReaderRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 @Service
@@ -61,7 +61,8 @@ public class ReaderService {
             throw new DataAccessException("Failed to delete object with id " + id, e) {
             };
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Object with id " + id + " not found", e);
+            throw new EntityNotFoundException();
+//            throw new EntityNotFoundException("Object with id " + id + " not found", e);
         } catch (Exception e) {
             throw new Exception("Failed to delete object with id " + id, e);
         }
