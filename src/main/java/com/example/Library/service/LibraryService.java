@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -35,18 +34,21 @@ public class LibraryService {
             return libraryRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Library with id " + id + " not found"));
         } catch (DataAccessException e) {
-            throw new DataAccessException("Failed to get library with id " + id, e){};
+            throw new DataAccessException("Failed to get library with id " + id, e) {
+            };
         }
     }
 
-    public Library save(Library library)throws DataAccessException {
+    public Library save(Library library) throws DataAccessException {
         try {
             return libraryRepository.save(library);
-        }catch (DataAccessException e) {
-            throw new DataAccessException("Failed to create library", e){};       }
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to create library", e) {
+            };
+        }
     }
 
-    public String issueOfTheBook(Long readerId, Long bookId) throws DataAccessException{
+    public String issueOfTheBook(Long readerId, Long bookId) throws DataAccessException {
         try {
             Book book = bookRepository.findById(bookId).orElseThrow(() ->
                     new IllegalArgumentException("Invalid book ID"));
@@ -74,17 +76,18 @@ public class LibraryService {
         }
     }
 
-    public String returnOfTheBook(Long readerId, Long bookId)throws DataAccessException {
+    public String returnOfTheBook(Long readerId, Long bookId) throws DataAccessException {
         try {
-
 
             Book book = bookService.getById(bookId);
             Reader reader = readerService.getById(readerId);
             book.setStatus(Status.AVAILABLE);
+            History history = reader.getHistory();
             book.setReader(null);
             String bookName = book.getNameOfBook();
             reader.setBooks(null);
-            readerService.update(reader);
+            history.setDeliveryDate(LocalDate.now());
+            historyRepository.save(history);
             return "Читатель " + reader.getUserName() + " вернул книгу "
                     + bookName;
         } catch (DataAccessException e) {

@@ -5,7 +5,6 @@ import com.example.Library.repository.ReaderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,8 @@ public class ReaderService {
         try {
             return readerRepository.findAll();
         } catch (DataAccessException e) {
-            throw new DataAccessException("Failed to get all Readers", e){};
+            throw new DataAccessException("Failed to get all Readers", e) {
+            };
         }
     }
 
@@ -29,26 +29,31 @@ public class ReaderService {
             return readerRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
         } catch (DataAccessException e) {
-            throw new DataAccessException("Failed to get user with id " + id, e){};
+            throw new DataAccessException("Failed to get user with id " + id, e) {
+            };
         }
     }
 
     public Reader save(Reader reader) throws DataAccessException {
-       try {
-           return readerRepository.save(reader);
-       }catch (DataAccessException e) {
-           throw new DataAccessException("Failed to create user", e){};       }
+        try {
+            return readerRepository.save(reader);
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to create user", e) {
+            };
+        }
     }
 
     public Reader update(Reader reader) throws DataAccessException {
         try {
-           return readerRepository.save(reader);
+            return readerRepository.save(reader);
 
         } catch (OptimisticLockException ex) {
-            throw new OptimisticLockException("Error occurred while updating user: " + ex.getMessage()) {};
+            throw new OptimisticLockException("Error occurred while updating user: " + ex.getMessage()) {
+            };
         }
     }
-    public String  delete (Long id) throws Exception {
+
+    public String delete(Long id) throws Exception {
         try {
             readerRepository.deleteById(id);
             return "Reader delete";
