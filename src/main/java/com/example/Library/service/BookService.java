@@ -29,15 +29,22 @@ public class BookService {
         }
     }
 
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<Book> findAll()  throws DataAccessException{
+        try {
+            return bookRepository.findAll();
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get all books", e){};
+        }
     }
 
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public Book save(Book book)  throws DataAccessException{
+        try {
+            return bookRepository.save(book);
+        }catch (DataAccessException e) {
+            throw new DataAccessException("Failed to create book", e){};       }
     }
 
-    public Book update(Book book) {
+    public Book update(Book book)  throws DataAccessException{
         try {
             return bookRepository.save(book);
 
@@ -46,17 +53,33 @@ public class BookService {
         }
     }
 
-    public String delete(Long id) {
-        bookRepository.deleteById(id);
-        return "Delete";
-
+    public String delete(Long id) throws Exception {
+        try {
+            bookRepository.deleteById(id);
+            return "Book delete";
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to delete object with id " + id, e) {
+            };
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Object with id " + id + " not found", e);
+        } catch (Exception e) {
+            throw new Exception("Failed to delete object with id " + id, e);
+        }
     }
 
-    public List<Book> findAllByGenre(String genre) {
-        return bookRepository.findAllByGenre(genre);
+    public List<Book> findAllByGenre(String genre)  throws DataAccessException{
+        try {
+            return bookRepository.findAllByGenre(genre);
+        } catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get all books by genre", e){};
+        }
     }
 
-    public Book findBookByNameOfBook(String name) {
-        return bookRepository.findByNameOfBook(name);
+    public Book findBookByNameOfBook(String name) throws DataAccessException {
+        try{
+            return bookRepository.findByNameOfBook(name);
+        }catch (DataAccessException e) {
+            throw new DataAccessException("Failed to get all books by genre", e){};
+        }
     }
 }

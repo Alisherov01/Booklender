@@ -39,11 +39,14 @@ public class LibraryService {
         }
     }
 
-    public Library save(Library library) {
-        return libraryRepository.save(library);
+    public Library save(Library library)throws DataAccessException {
+        try {
+            return libraryRepository.save(library);
+        }catch (DataAccessException e) {
+            throw new DataAccessException("Failed to create library", e){};       }
     }
 
-    public String issueOfTheBook(Long readerId, Long bookId) {
+    public String issueOfTheBook(Long readerId, Long bookId) throws DataAccessException{
         try {
             Book book = bookRepository.findById(bookId).orElseThrow(() ->
                     new IllegalArgumentException("Invalid book ID"));
@@ -71,7 +74,7 @@ public class LibraryService {
         }
     }
 
-    public String returnOfTheBook(Long readerId, Long bookId) {
+    public String returnOfTheBook(Long readerId, Long bookId)throws DataAccessException {
         try {
 
 
