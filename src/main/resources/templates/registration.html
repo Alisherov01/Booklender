@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/regstyle.css" th:href="regstyle.css">
+    <title>Forms</title>
+</head>
+<body>
+        <h1 class="regtitle" id="title">Регистрация</h1>
+        <p id="description"><em></em> </p>
+        <form action="" id="survey-form">
+            <label for="fname" id="name-label" class="lab">Имя</label><br>
+                <input type="text" id="fname" class="inputl" name="fname" placeholder="Введите ваше имя" required><br>
+
+            <label for="email" id="email-label" class="lab">Электронная почта</label><br>
+                <input type="text" id="email" class="inputl" name="email" placeholder="Введите ваш email" required><br>
+
+            <label for="login" id="login-label" class="lab">Логин (login)</label><br>
+                <input type="text" id="login" class="inputl" name="login" placeholder="Введите ваш логин" required><br><br>
+
+            <label for="password" id="password-label" class="lab">Пароль</label><br>
+            <input type="password" id="password" class="inputl" name="password" placeholder="Введите пароль" required><br>
+
+
+            <br>
+            <button type="sign up" class="sign-button" id="submit">Зарегистрироваться</button>
+            <a class="nav-item" href="/main">На главную</a>
+        </form>
+    </main>
+
+        <!--            <label for="birthday" id="birthday-label" class="lab">Birthday</label><br>-->
+        <!--            <input type="int" id="birthday" class="inputl" name="birthday" placeholder="Enter your birhday" required><br>-->
+
+        <!--            <label for="dropdown" class="lab">Gender</label><br>-->
+        <!--            <select id="dropdown" name="role" required>-->
+        <!--                <option value="" label="Select current role" selected disabled></option>-->
+        <!--                <option value="Male">Male</option>-->
+        <!--                <option value="Female">Female</option>-->
+        <!--                <option value="Other">Other</option>-->
+        <!--            </select><br>-->
+</body>
+</html>

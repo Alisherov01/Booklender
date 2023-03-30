@@ -28,8 +28,8 @@
       <div class="nav">
         <a class="nav-item" href="/main">Главная</a>
         <a class="nav-item" href="/allBooks">Список книг</a>
-        <a class="nav-item" href="@">Список авторов</a>
-        <a class="nav-item" href="@">Корзина</a>
+        <a class="nav-item" href="@">Личный кабинет</a>
+<!--        <a class="nav-item" href="@">Корзина</a>-->
       </div>
 
       <div class="cart">
@@ -56,20 +56,55 @@
       </div>
 
       <div class="btn">
-        <a class="button" href="cur">
-          Выбрать книгу
+
+        <a class="button" href="/auth">
+          Войти
+        </a>
+      </div>
+
+      <div  class="register">
+        <a class="button-reg" href="@">
+          Зарегистрироваться
         </a>
       </div>
 
     </div>
 <!--    <h1 class="welcome">Добро пожаловать в библиотеку.</h1>-->
 
-    <ul>
-      <li class="li" th:each="book : ${books}" th:text="${book.getAuthor().toString()
-      +'     '+book.getGenre().toString()+'   '+book.getNameOfBook().toString()}"></li>
+
+    <div th:switch="${books}">
+      <h2 th:case="null">No users yet!</h2>
+      <div th:case="*">
+        <h2>Books</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Удалить</th>
+            <th>Читать</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="book : ${books}">
+            <td class="li" th:text="${book.getAuthor().toString()}"></td>
+            <td class="li" th:text="${book.getGenre().toString()}"></td>
+            <td class="li" th:text="${book.getNameOfBook().toString()}"></td>
+            <td><a class="button" th:href="@{/edit/{id}(id=${book.getId()})}">Удалить</a></td>
+            <td><a class="button" th:href="@{/delete/{id}(id=${book.getId()})}">Читать</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+<!--      <p><a href="/signup">Add a new user</a></p>-->
+    </div>
+
+<!--    <ul>-->
+<!--      <li class="li" th:each="book : ${books}" th:text="${book.getAuthor().toString()-->
+<!--      +'     '+book.getGenre().toString()+'   '+book.getNameOfBook().toString()}"></li>-->
 
 
-    </ul>
+<!--    </ul>-->
     <hr>
 
   </div>

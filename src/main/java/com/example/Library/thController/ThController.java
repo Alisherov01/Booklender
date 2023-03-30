@@ -25,4 +25,12 @@ public class ThController {
     public String main()throws Exception{
         return "library";
     }
+    @GetMapping("/auth")
+    public String auth()throws Exception{
+        return "authentification";
+    }
+    @GetMapping("/registration")
+    public String registration()throws Exception{
+        return "registration";
+    }
 }
