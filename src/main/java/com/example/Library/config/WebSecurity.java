@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -48,19 +49,25 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http    .csrf().disable()
                 .authorizeRequests()
 
-                .antMatchers(HttpMethod.GET,"/pnr","/user/*","/airport/*","/aviaCompany/*","/email/*").hasAuthority(Permission.ADMIN_READ.getPermission())
-                .antMatchers("/user/passwordUpdate").hasAuthority(Permission.ADMIN_READ.getPermission())
-                .antMatchers("/pnr/moder").hasAuthority(Permission.ADMIN_WRITE.getPermission())
-                .antMatchers(HttpMethod.POST,"/pnr/*","/user/*","/airport/*","/aviaCompany/*").hasAuthority(Permission.ADMIN_WRITE.getPermission())
-                .antMatchers(HttpMethod.DELETE,"/pnr/*","/user/*","/airport/delete/*","/aviaCompany/delete/*").hasAuthority(Permission.ADMIN_UPDATE.getPermission())
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers(HttpMethod.PUT,"/pnr/*","/user/delete/*","/user/update/*","/airport/update/*","/airport/delete/*","/aviaCompany/delete/*","/aviaCompany/update/*").hasAuthority(Permission.ADMIN_UPDATE.getPermission())
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
+//                .antMatchers(HttpMethod.DELETE).hasAuthority(Permission.ADMIN_UPDATE.getPermission())
+//                .antMatchers(HttpMethod.PUT).hasAuthority(Permission.ADMIN_UPDATE.getPermission())
                 .anyRequest().authenticated()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .and().httpBasic();
 
-                .and().httpBasic();
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .and()
+                .formLogin()
+                .loginPage("/auth").permitAll()
+                .defaultSuccessUrl("/auth/success")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout","POST"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/auth");
+
     }
 
 

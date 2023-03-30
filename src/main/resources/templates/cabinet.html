@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <link rel="stylesheet" href="../static/cabinetstyle.css" th:href="cabinetstyle.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="admin">
+            <h1>ДОБРО ПОЖАЛОВАТЬ<br> АДМИН</h1>
+            <!-- <div class="group">      
+                <input type="text" required>
+                <span class="highlight"></span>
+                <label>Название книги</label>
+              </div> -->
+<!--            <div class="images">-->
+<!--                <img src="./img/kniga.jpg" alt="">-->
+<!--            </div>-->
+        </div>
+        <div class="buttons">
+            <button class="button-66">Список книг</button>
+            <button id="buttonclick" class="button-66">Список читателей</button>
+            <button class="button-66">Добавить книгу</button>
+            <form action="/main">
+            <button class="button-66">На главную</button></form>
+        </div>
+    </div>
+</body>
+</html>

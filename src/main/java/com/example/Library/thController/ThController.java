@@ -29,8 +29,17 @@ public class ThController {
     public String auth()throws Exception{
         return "authentification";
     }
+    @GetMapping("/auth/success")
+    public String log(){
+        return "cabinet";
+    }
+
     @GetMapping("/registration")
     public String registration()throws Exception{
         return "registration";
+    }
+    @GetMapping("/auth/logout")
+    public String logout(){
+        return "logout";
     }
 }
