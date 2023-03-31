@@ -64,7 +64,7 @@ public class LibraryService {
             history.setReaders(reader);
             history.setIssueDate(LocalDate.now());
             historyRepository.save(history);
-            return "Читатель " + reader.getUserName() + " взял книгу " + book.getNameOfBook() + ".";
+            return "Читатель " + reader.getFullName() + " взял книгу " + book.getNameOfBook() + ".";
         } catch (DataAccessException e) {
             throw new DataAccessException(e.getMessage()) {
             };
@@ -82,7 +82,7 @@ public class LibraryService {
             String bookName = book.getNameOfBook();
             reader.setBooks(null);
             readerService.update(reader);
-            return "Читатель " + reader.getUserName() + " вернул книгу "
+            return "Читатель " + reader.getFullName() + " вернул книгу "
                     + bookName;
         } catch (DataAccessException e) {
             throw new DataAccessException(e.getMessage()) {

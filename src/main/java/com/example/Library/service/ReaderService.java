@@ -1,5 +1,6 @@
 package com.example.Library.service;
 
+import com.example.Library.dto.ReaderDTO;
 import com.example.Library.entity.Reader;
 import com.example.Library.repository.ReaderRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,12 +11,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ReaderService {
     ReaderRepository readerRepository;
+
+    EmailService emailService;
 
     public List<Reader> getAll() throws DataAccessException {
         try {
@@ -61,5 +63,16 @@ public class ReaderService {
         } catch (Exception e) {
             throw new Exception("Failed to delete object with id " + id, e);
         }
+    }
+    public ReaderDTO registration(ReaderDTO readerDTO){
+        Reader reader = new Reader();
+        reader.setFullName(readerDTO.getName());
+        reader.setEmail(readerDTO.getEmail());
+        reader.setLogin(readerDTO.getLogin());
+        reader.setPassword(readerDTO.getPassword());
+        readerRepository.save(reader);
+        Long id = reader.getId();
+        emailService.sendEmail(reader.getEmail(),"Welcome","http://localhost:8080/email/simple-email/verification/{id}"+id);
+        return readerDTO;
     }
 }
