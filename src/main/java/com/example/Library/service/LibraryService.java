@@ -63,10 +63,11 @@ public class LibraryService {
             bookList.add(book);
             reader.setBooks(bookList);
             reader.setBooksRead(bookList);
-            readerService.update(reader);
             History history = new History();
             history.setBooks(book);
             history.setReaders(reader);
+            book.setHistory(history);
+            reader.setHistory(history);
             history.setIssueDate(LocalDate.now());
             historyRepository.save(history);
             return "Читатель " + reader.getUserName() + " взял книгу " + book.getNameOfBook() + ".";
