@@ -19,12 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserRestController {
     private final UserService userService;
-    private final BorrowingService borrowingService;
 
-    @GetMapping("/all")
-    public List<User> getAllBooks() {
-        return userService.getAllBooks();
-    }
 
 
 }

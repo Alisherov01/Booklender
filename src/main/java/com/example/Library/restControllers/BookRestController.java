@@ -44,13 +44,13 @@ public class BookRestController {
         return bookService.getFreeBooks();
     }
 
-    /*@GetMapping("/getAllBooksByUserId/{id}")
-    public List<BookDTO> getAllUserBooks(@PathVariable Long id) {
-        return bookService.getBooksByUserId(id);
+    @GetMapping("/getReadingBooksByUserId/{id}")
+    public List<String> getReadingUserBooks(@PathVariable Long id) {
+        return bookService.getReadingBooksByUserId(id);
     }
 
-    @GetMapping("/getReadingBooksByUserId/{id}")
-    public List<BookDTO> getReadingUserBooks(@PathVariable Long id) {
-        return bookService.getReadingBooksByUserId(id);
-    }*/
+    @GetMapping("/getAllBooksByUserId/{id}")
+    public List<String> getAllUserBooks(@PathVariable Long id) {
+        return bookService.getBooksByUserId(id);
+    }
 }

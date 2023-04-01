@@ -77,26 +77,12 @@ public class BookService {
         return bookDTOs;
     }
 
-    public List<BookDTO> getBooksByUserId(Long id) {
-        List<Book> books = bookRepository.getAllBooksByUserId(id);
-        List<BookDTO> bookDTOs = new ArrayList<>();
+    public List<String> getReadingBooksByUserId(Long id) {
+        return bookRepository.getReadingBooksByUserId(id);
 
-        for (Book book : books) {
-            BookDTO dto = toDto(book);
-            bookDTOs.add(dto);
-        }
-        return bookDTOs;
     }
 
-    public List<BookDTO> getReadingBooksByUserId(Long id) {
-        List<Book> books = bookRepository.getReadingBooksByUserId(id);
-        List<BookDTO> bookDTOs = new ArrayList<>();
-
-        for (Book book : books) {
-            BookDTO dto = toDto(book);
-            bookDTOs.add(dto);
-        }
-        return bookDTOs;
-
+    public List<String> getBooksByUserId(Long id) {
+        return bookRepository.getAllBooksByUserId(id);
     }
 }

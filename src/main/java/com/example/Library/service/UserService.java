@@ -70,9 +70,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getAllBooks() {
-        return userRepository.getAllBooks();
-    }
-
-
 }
