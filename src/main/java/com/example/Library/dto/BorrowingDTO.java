@@ -15,8 +15,8 @@ import java.time.LocalDate;
 public class BorrowingDTO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private User user;
-    private Book book;
+    private String user;
+    private String book;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate takeData;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
