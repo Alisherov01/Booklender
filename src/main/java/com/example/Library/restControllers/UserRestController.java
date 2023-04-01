@@ -1,5 +1,6 @@
 package com.example.Library.restControllers;
 
+import com.example.Library.dto.UserDTOforList;
 import com.example.Library.entity.User;
 import com.example.Library.repository.BorrowingRepository;
 import com.example.Library.service.BookService;
@@ -20,6 +21,10 @@ import java.util.List;
 public class UserRestController {
     private final UserService userService;
 
+    @GetMapping("/allBooksOfAllUsers")
+    public List<UserDTOforList> getAllBooksOfAllUsers() {
+        return userService.getAllBooksOfAllUsers();
+    }
 
 
 }

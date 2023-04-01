@@ -3,6 +3,7 @@ package com.example.Library.service;
 
 import com.example.Library.dto.UserDTO;
 import com.example.Library.dto.UserDTO;
+import com.example.Library.dto.UserDTOforList;
 import com.example.Library.entity.User;
 import com.example.Library.entity.User;
 import com.example.Library.repository.BookRepository;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final BookService bookService;
 
     private UserDTO toDto(User user) {
         return new UserDTO(
@@ -68,6 +70,21 @@ public class UserService {
         User user = userRepository.findById(id).get();
         user.setRemoveDate(LocalDate.now());
         userRepository.save(user);
+    }
+
+    //список всех пользователей со списком их книг
+    public List<UserDTOforList> getAllBooksOfAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTOforList> usersDto = new ArrayList<>();
+
+        for (User user: users) {
+            UserDTOforList userDTo = new UserDTOforList();
+            userDTo.setFullName(user.getFullName());
+            List<String> books = bookService.getAllBooksByUserId(user.getId());
+            userDTo.setBooks(books);
+            usersDto.add(userDTo);
+        }
+        return usersDto;
     }
 
 }

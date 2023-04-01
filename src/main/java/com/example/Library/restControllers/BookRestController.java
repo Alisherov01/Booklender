@@ -52,11 +52,8 @@ public class BookRestController {
 
     @GetMapping("/getAllBooksByUserId/{id}")
     public List<String> getAllUserBooks(@PathVariable Long id) {
-        return bookService.getBooksByUserId(id);
+        return bookService.getAllBooksByUserId(id);
     }
 
-    @GetMapping("/allBooksOfAllUsers")
-    public List<UserDTOforList> getAllBooksOfAllUsers() {
-        return bookService.getAllBooksOfAllUsers();
-    }
+
 }

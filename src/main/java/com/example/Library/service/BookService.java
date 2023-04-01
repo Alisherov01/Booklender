@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
-    private final UserRepository userRepository;
 
     private BookDTO toDto(Book book) {
         return new BookDTO(
@@ -84,24 +83,11 @@ public class BookService {
 
     }
 
-    public List<String> getBooksByUserId(Long id) {
+    public List<String> getAllBooksByUserId(Long id) {
         return bookRepository.getAllBooksByUserId(id);
     }
 
-    //список всех пользователей со списком их книг
-    public List<UserDTOforList> getAllBooksOfAllUsers() {
-        List<User> users = userRepository.findAll();
-        List<UserDTOforList> usersDto = new ArrayList<>();
 
-        for (User user: users) {
-            UserDTOforList userDTo = new UserDTOforList();
-            userDTo.setFullName(user.getFullName());
-            List<String> books = bookRepository.getAllBooksByUserId(user.getId());
-            userDTo.setBooks(books);
-            usersDto.add(userDTo);
-        }
-        return usersDto;
-    }
 
   
 }
