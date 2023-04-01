@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    /*@Query("select fullName, borrowings from User")
-    List<User> getAllBooks();*/
+
 }

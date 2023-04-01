@@ -1,6 +1,7 @@
 package com.example.Library.restControllers;
 
 import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.UserDTOforList;
 import com.example.Library.entity.Book;
 import com.example.Library.service.BookService;
 import lombok.AllArgsConstructor;
@@ -52,5 +53,10 @@ public class BookRestController {
     @GetMapping("/getAllBooksByUserId/{id}")
     public List<String> getAllUserBooks(@PathVariable Long id) {
         return bookService.getBooksByUserId(id);
+    }
+
+    @GetMapping("/allBooksOfAllUsers")
+    public List<UserDTOforList> getAllBooksOfAllUsers() {
+        return bookService.getAllBooksOfAllUsers();
     }
 }

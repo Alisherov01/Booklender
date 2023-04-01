@@ -1,7 +1,9 @@
 package com.example.Library.service;
 
 import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.UserDTOforList;
 import com.example.Library.entity.Book;
+import com.example.Library.entity.User;
 import com.example.Library.repository.BookRepository;
 import com.example.Library.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -85,4 +87,21 @@ public class BookService {
     public List<String> getBooksByUserId(Long id) {
         return bookRepository.getAllBooksByUserId(id);
     }
+
+    //список всех пользователей со списком их книг
+    public List<UserDTOforList> getAllBooksOfAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTOforList> usersDto = new ArrayList<>();
+
+        for (User user: users) {
+            UserDTOforList userDTo = new UserDTOforList();
+            userDTo.setFullName(user.getFullName());
+            List<String> books = bookRepository.getAllBooksByUserId(user.getId());
+            userDTo.setBooks(books);
+            usersDto.add(userDTo);
+        }
+        return usersDto;
+    }
+
+  
 }
