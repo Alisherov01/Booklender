@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserDTOforList {
+public class UserForListDto {
     private String fullName;
     private List<String> books;
 }

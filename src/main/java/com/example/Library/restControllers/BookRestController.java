@@ -1,10 +1,9 @@
 package com.example.Library.restControllers;
 
-import com.example.Library.dto.BookDTO;
-import com.example.Library.entity.Book;
+import com.example.Library.dto.BookDto;
 import com.example.Library.service.BookService;
-import com.example.Library.service.impl.BookServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +14,18 @@ import java.util.List;
 public class BookRestController {
     private final BookService bookService;
     @GetMapping("/{id}")
-    public BookDTO getById(@PathVariable Long id) {
+    public BookDto getById(@PathVariable Long id) {
         return bookService.getById(id);
     }
 
     @GetMapping("/all")
-    public List<BookDTO> getAll() {
+    public List<BookDto> getAll() {
         return bookService.getAll();
     }
 
-    @PostMapping("/update")
-    public BookDTO update(@RequestBody Book book) {
-        return bookService.update(book);
+    @PostMapping("/update/{id}")
+    public BookDto update(@PathVariable Long id, @RequestBody BookDto book) {
+        return bookService.update(id, book);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -34,13 +33,13 @@ public class BookRestController {
         bookService.deleteById(id);
     }
 
-    @PostMapping("create")
-    public BookDTO create(@RequestBody Book book) {
-        return bookService.create(book);
+    @PostMapping("/create")
+    public BookDto create(@RequestBody BookDto dto) {
+        return bookService.create(dto);
     }
 
     @GetMapping("/getFree")
-    public List<BookDTO> getAllFreeBook() {
+    public List<BookDto> getAllFreeBook() {
         return bookService.getFreeBooks();
     }
 

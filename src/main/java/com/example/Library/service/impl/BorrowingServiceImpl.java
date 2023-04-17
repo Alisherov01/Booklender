@@ -1,8 +1,11 @@
 package com.example.Library.service.impl;
 
-import com.example.Library.dto.BorrowingDTO;
+import com.example.Library.dto.BorrowingDto;
 import com.example.Library.entity.Borrowing;
+import com.example.Library.mapper.BorrowingMapper;
+import com.example.Library.repository.BookRepository;
 import com.example.Library.repository.BorrowingRepository;
+import com.example.Library.repository.UserRepository;
 import com.example.Library.service.BorrowingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,41 +15,28 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class BorrowingServiceImpl implements BorrowingService {
     private final BorrowingRepository borrowingRepository;
-    private final UserServiceImpl userServiceImpl;
-    private final BookServiceImpl bookServiceImpl;
-
-    private BorrowingDTO toDto(Borrowing borrowing){
-        return new BorrowingDTO(
-                borrowing.getId(),
-                borrowing.getUser().getUserName(),
-                borrowing.getBook().getName(),
-                borrowing.getTakeData(),
-                borrowing.getReturnDate()
-        );
-    }
+    private final BookRepository bookRepository;
+    private final UserRepository userRepository;
+    private final BorrowingMapper mapper;
 
     @Override
-    public BorrowingDTO takeBook(Long userId, Long bookId) {
-        if (borrowingRepository.countBookByUserId(userId) <= 2){
+    public BorrowingDto takeBook(Long userId, Long bookId) {
+        if (borrowingRepository.countBookByUserId(userId) < 2 &&
+            bookRepository.bookIsFree(bookId) == true) {
         Borrowing borrowing = new Borrowing();
-        borrowing.setUser(userServiceImpl.getByIdEntity(userId));
-        borrowing.setBook(bookServiceImpl.getByIdEntity(bookId));
+        borrowing.setUser(userRepository.findById(userId).get());
+        borrowing.setBook(bookRepository.findById(bookId).get());
         borrowingRepository.save(borrowing);
-        return toDto(borrowing);
+        return mapper.map(borrowing);
     } else return null;
     }
 
     @Override
-    public BorrowingDTO returnBook(Long id) {
-        Borrowing borrowing = borrowingRepository.findById(id).get();
+    public BorrowingDto returnBook(Long userId, Long bookId) {
+        Borrowing borrowing = borrowingRepository.findByUserIdAndBookId(userId, bookId);
         borrowing.setReturnDate(LocalDate.now());
         borrowingRepository.save(borrowing);
-        return toDto(borrowing);
-    }
-
-    @Override
-    public int countBooksByUserId(Long id) {
-        return borrowingRepository.countBookByUserId(id);
+        return mapper.map(borrowing);
     }
 
 }

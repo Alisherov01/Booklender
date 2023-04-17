@@ -10,10 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book,Long> {
-
-   /* List<Book> findAllByGenre(String genre);
-    Book findByNameOfBook(String name);*/
-
     //книги, которые заняты
     @Query(value = "select name from books join borrowings on books.id = borrowings.book_id where return_date is null", nativeQuery = true)
     List<Book> getNotFreeBooks();
@@ -29,6 +25,11 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     //книги пользователя, которые он читает (но еще не вернул обратно)
     @Query(value = "select distinct name from books join borrowings on books.id = borrowings.book_id where borrowings.user_id = ?1 and borrowings.return_date is null", nativeQuery = true)
     List<String> getReadingBooksByUserId(Long userId);
+
+    @Query(value = "select exists (select id from books where books.id = ? and (books.id in (select book_id from borrowings where return_date is not null) " +
+            "or books.id not in (select book_id from borrowings)))", nativeQuery = true)
+    boolean bookIsFree(Long bookId);
+
 
 
 

@@ -1,12 +1,12 @@
 package com.example.Library.service.impl;
 
 
-import com.example.Library.dto.UserDTO;
-import com.example.Library.dto.UserDTOforList;
+import com.example.Library.dto.UserDto;
+import com.example.Library.dto.UserForListDto;
 import com.example.Library.entity.User;
+import com.example.Library.mapper.UserMapper;
 import com.example.Library.repository.UserRepository;
 import com.example.Library.service.UserService;
-import com.example.Library.service.impl.BookServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,54 +18,40 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper mapper;
     private final BookServiceImpl bookServiceImpl;
 
-    private UserDTO toDto(User user) {
-        return new UserDTO(
-                user.getId(),
-                user.getFullName(),
-                user.getEmail(),
-                user.getUserName(),
-                user.getPassword(),
-                user.getAuthStatus(),
-                user.getBorrowings());
-    }
     @Override
 
-    public UserDTO getById(Long id) {
+    public UserDto getById(Long id) {
+        return mapper.map(userRepository.findById(id).get());
+    }
+
+    @Override
+    public List<UserDto> getAll() {
+        return mapper.map(userRepository.findAll());
+    }
+
+    @Override
+    public UserDto create(UserDto dto) {
+        User user = userRepository.save(mapper.map(dto));
+        return mapper.map(user);
+    }
+
+    @Override
+    public UserDto update(Long id, UserDto dto) {
         User user = userRepository.findById(id).get();
-        return toDto(user);
-    }
+        if (user != null) {
+            user.setFullName(dto.getFullName());
+            user.setEmail(dto.getEmail());
+            user.setUserName(dto.getUserName());
+            user.setPassword(dto.getPassword());
+            user.setAuthStatus(dto.getAuthStatus());
+            user.setBorrowings(dto.getBorrowings());
 
-    @Override
-    public User getByIdEntity(Long id) {
-        User user = userRepository.findById(id).get();
-        return user;
-    }
-
-
-    @Override
-    public List<UserDTO> getAll() {
-        List<User> users = userRepository.findAll();
-        List<UserDTO> userDTOS = new ArrayList<>();
-
-        for (User user: users) {
-            UserDTO dto = toDto(user);
-            userDTOS.add(dto);
+            userRepository.save(user);
         }
-        return userDTOS;
-    }
-
-    //??
-    @Override
-    public UserDTO create(User user) {
-        return toDto(userRepository.save(user));
-    }
-
-    //??-----
-    @Override
-    public UserDTO update(User user) {
-        return toDto(userRepository.save(user));
+        return mapper.map(user);
     }
 
     @Override
@@ -77,12 +63,12 @@ public class UserServiceImpl implements UserService {
 
     //список всех пользователей со списком их книг
     @Override
-    public List<UserDTOforList> getAllBooksOfAllUsers() {
+    public List<UserForListDto> getAllBooksOfAllUsers() {
         List<User> users = userRepository.findAll();
-        List<UserDTOforList> usersDto = new ArrayList<>();
+        List<UserForListDto> usersDto = new ArrayList<>();
 
         for (User user: users) {
-            UserDTOforList userDTo = new UserDTOforList();
+            UserForListDto userDTo = new UserForListDto();
             userDTo.setFullName(user.getFullName());
             List<String> books = bookServiceImpl.getAllBooksByUserId(user.getId());
             userDTo.setBooks(books);

@@ -1,8 +1,7 @@
 package com.example.Library.restControllers;
 
-import com.example.Library.dto.UserDTOforList;
+import com.example.Library.dto.UserForListDto;
 import com.example.Library.service.UserService;
-import com.example.Library.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ public class UserRestController {
     private final UserService userService;
 
     @GetMapping("/allBooksOfAllUsers")
-    public List<UserDTOforList> getAllBooksOfAllUsers() {
+    public List<UserForListDto> getAllBooksOfAllUsers() {
         return userService.getAllBooksOfAllUsers();
     }
 
