@@ -1,6 +1,7 @@
 package com.example.Library.service;
 
 import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.BookSaveDTO;
 import com.example.Library.entity.Book;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,9 @@ public interface BookService {
     List<BookDTO> getAll();
     BookDTO create(Book book);
     BookDTO update(Book book);
-    void deleteById(Long id);
+    String deleteById(Long id);
     List<BookDTO> getFreeBooks();
-    List<String> getReadingBooksByUserId(Long id);
+    List<Book> getReadingBooksByUserId(Long id);
     List<String> getAllBooksByUserId(Long id);
+    BookSaveDTO saveNewBook(BookSaveDTO dto);
 }

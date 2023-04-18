@@ -1,12 +1,11 @@
 package com.example.Library.entity;
 
 import com.example.Library.enums.AuthStatus;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import com.example.Library.enums.Roles;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,11 +19,14 @@ public class User {
 
     private String fullName;
     private String email;
-    private String userName;
+    private String login;
     private String password;
 
     @Enumerated(value = EnumType.STRING)
     private AuthStatus authStatus;
+
+    @Enumerated(value = EnumType.STRING)
+    private Roles role;
 
     @OneToMany(mappedBy = "user")
     private List<Borrowing> borrowings;

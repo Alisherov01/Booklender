@@ -45,7 +45,7 @@ public class BookRestController {
     }
 
     @GetMapping("/getReadingBooksByUserId/{id}")
-    public List<String> getReadingUserBooks(@PathVariable Long id) {
+    public List<Book> getReadingUserBooks(@PathVariable Long id) {
         return bookService.getReadingBooksByUserId(id);
     }
 

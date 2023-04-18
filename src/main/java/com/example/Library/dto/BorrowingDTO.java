@@ -1,13 +1,12 @@
 package com.example.Library.dto;
 
-import com.example.Library.entity.Book;
-import com.example.Library.entity.User;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.time.LocalDate;
 @Data
 @AllArgsConstructor

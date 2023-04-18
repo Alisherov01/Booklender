@@ -18,7 +18,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     private BorrowingDTO toDto(Borrowing borrowing){
         return new BorrowingDTO(
                 borrowing.getId(),
-                borrowing.getUser().getUserName(),
+                borrowing.getUser().getLogin(),
                 borrowing.getBook().getName(),
                 borrowing.getTakeData(),
                 borrowing.getReturnDate()
@@ -42,6 +42,14 @@ public class BorrowingServiceImpl implements BorrowingService {
         borrowing.setReturnDate(LocalDate.now());
         borrowingRepository.save(borrowing);
         return toDto(borrowing);
+    }
+
+    @Override
+    public Borrowing returnBookByUser(Long userId, Long bookId) {
+        Borrowing borrowing = borrowingRepository.findByUserIdAndBook_IdAAndAndReturnDateIsNull(userId,bookId);
+        borrowing.setReturnDate(LocalDate.now());
+        borrowingRepository.save(borrowing);
+        return borrowing;
     }
 
     @Override

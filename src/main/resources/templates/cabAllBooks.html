@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+  <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <link rel="stylesheet" href="../static/title.css" th:href="title.css">
+  <title>Document</title>
+</head>
+<body>
+<div class="container">
+
+  <form action="/auth/success">
+        <button class="button-66">Кабинет</button></form>
+
+
+
+    <div th:switch="${books}">
+      <h2 th:case="null">No books yet.</h2>
+      <div th:case="*">
+        <h2>Книги</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Название</th>
+            <th>Читать</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="book : ${books}">
+            <td class="li" th:text="${book.getAuthor().toString()}"></td>
+            <td class="li" th:text="${book.getGenre().toString()}"></td>
+            <td class="li" th:text="${book.getName().toString()}"></td>
+<!--            <div th:object="userIsUser2">-->
+            <td><a class="button" th:href="@{/takeBook/{id2}/{id3}(id2=${userIsUser2.getId()},id3=${book.getId()})}">Взять книгу</a></td>
+            <td><a class="button" th:href="@{/deleteBook/{id}(id=${book.getId()})}">Удалить</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+</div>
+</body>
+</html>

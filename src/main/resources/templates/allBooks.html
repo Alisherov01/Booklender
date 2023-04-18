@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href="../static/title.css" th:href="title.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <title>Library</title>
+</head>
+<body>
+<div class="header">
+  <div class="container">
+    <div class="header-line">
+      <div class="header-logo">
+        <img src="books.png" alt="" width="150" height="150">
+      </div>
+
+      <div class="nav">
+        <a class="nav-item" href="/main">Главная</a>
+        <a class="nav-item" href="/allBooks">Список книг</a>
+        <a class="nav-item" href="@">Личный кабинет</a>
+<!--        <a class="nav-item" href="@">Корзина</a>-->
+      </div>
+
+      <div class="cart">
+        <a href="@">
+          <img class="cart-img" src="whitecart.png" width="30" height="30">
+        </a>
+      </div>
+
+      <div class="phone">
+
+
+        <div class="phone-holder">
+          <div class="phone-image">
+            <a href="@">
+              <img src="whitephone.png" width="30" height="30">
+            </a>
+          </div>
+
+          <div class="number">+996 552 778 445</div>
+        </div>
+
+
+        <div class="phone-text">Связаться с библиотекой</div>
+      </div>
+
+      <div class="btn">
+
+        <a class="button" href="/auth">
+          Войти
+        </a>
+      </div>
+
+      <div  class="register">
+        <a class="button-reg" href="/registration">
+          Зарегистрироваться
+        </a>
+      </div>
+
+    </div>
+<!--    <h1 class="welcome">Добро пожаловать в библиотеку.</h1>-->
+
+
+    <div th:switch="${books}">
+      <h2 th:case="null">No books yet.</h2>
+      <div th:case="*">
+        <h2>Книги</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Название</th>
+            <th>Читать</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="book : ${books}">
+            <td class="li" th:text="${book.getAuthor().toString()}"></td>
+            <td class="li" th:text="${book.getGenre().toString()}"></td>
+            <td class="li" th:text="${book.getName().toString()}"></td>
+            <td><a class="button" th:href="@{/edit/{id}(id=${book.getId()})}">Удалить</a></td>
+            <td><a class="button" th:href="@{/delete/{id}(id=${book.getId()})}">Читать</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+<!--      <p><a href="/signup">Add a new user</a></p>-->
+    </div>
+
+<!--    <ul>-->
+<!--      <li class="li" th:each="book : ${books}" th:text="${book.getAuthor().toString()-->
+<!--      +'     '+book.getGenre().toString()+'   '+book.getNameOfBook().toString()}"></li>-->
+
+
+<!--    </ul>-->
+    <hr>
+
+  </div>
+</div>
+
+
+
+
+</body>
+</html>

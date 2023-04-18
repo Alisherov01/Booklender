@@ -2,6 +2,7 @@ package com.example.Library.service;
 
 import com.example.Library.dto.UserDTO;
 import com.example.Library.dto.UserDTOforList;
+import com.example.Library.dto.UserSaveDTO;
 import com.example.Library.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -16,5 +17,6 @@ public interface UserService {
     UserDTO update(User user);
     void deleteById(Long id);
     List<UserDTOforList> getAllBooksOfAllUsers();
+    UserSaveDTO saveForReg(UserSaveDTO dto);
 
 }

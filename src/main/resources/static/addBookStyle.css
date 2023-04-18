@@ -1,0 +1,163 @@
+body{
+    background: url(1722.jpg)repeat;
+    background-size: cover;
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+  form {
+    position: relative;
+    background-color: rgba(10, 10, 45, 0.7);
+    margin-left: 0px;                        
+    margin-right: 500px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #FFF;
+    border-radius: 5px;
+    min-width: 600px;
+    max-width: 750px;
+    box-sizing: border-box;
+  }
+
+.inputl {
+    width: 500px;
+    min-height: 30px;
+    max-height: 30px;
+    border-radius: 3px;
+    border: 0px;
+    margin-bottom: 30px;
+    padding-left: 25px;
+    margin-top: -20px;
+  }
+
+  select{
+    width: 510px;
+    max-height: 30px;
+    min-height: 30px;
+    border-radius: 3px;
+    border: 0px;
+    margin-bottom: 20px;
+  }
+
+  .lab{
+        display: flex;
+        padding-left: 120px;
+  }
+
+  .lab2{
+      padding-bottom: 5px;
+  }
+
+  #radio{
+        text-align: start;
+  }
+
+  nav{
+        padding-left: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: start;
+  }
+
+.btn {
+
+
+  margin-top: 20px; /* задаем отступ сверху для всех кнопок */
+
+  background-color: #4CAF50; /* Зеленый цвет фона */
+  color: white; /* Белый цвет текста */
+  
+  padding: 12px 15px; /* Добавление отступов */
+  
+ 
+  border: none; /* Удаление границы */
+  border-radius: 4px; /* Добавление скругленных углов */
+  cursor: pointer; /* Изменение курсора при наведении */
+}
+
+.lab {
+  font-size: 15px; /* Изменение размера шрифта */
+  font-weight: bold; /* Жирный текст */
+}
+
+
+
+ 
+ #submit{
+        color: #FFF;
+        width: 450px;
+        height: 30px;
+        border-radius: 3px;
+        border: 0px;
+        margin-bottom: 30px;
+        background-color: rgb(52, 190, 52);
+  }
+
+
+.h1 {
+        font-weight: normal;
+        padding-top: 20px;
+        padding-bottom: -20px;
+        margin-bottom: -20;
+ }
+
+ #description{
+    margin: 0;
+    padding-top: -20px;
+    padding-bottom: 40px;
+ }
+
+
+input{
+        color: #6e6a6a;
+}
+
+select{
+        color: #6e6a6a;
+}
+
+textarea{
+    border-radius: 5px;
+    color: #6e6a6a;
+    font-family: sans-serif;
+}
+.buttons{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.buttons button{
+    margin-top: 40px;
+
+}
+
+.button-66 {
+
+    text-align: center;
+
+    background-color: #9d1c7b;
+    color: white;
+    text-decoration: none;
+    border: 2px solid #A52A2A;
+    font-weight: 900;
+    font-size: 20px;
+    margin: 50px auto;
+
+    padding: 14px 18px;
+    border-radius: 20px;
+
+    transition: background-color 0.2s linear;
+}
+
+.button-66:hover {
+    background-color: #631948;
+    transform: translateY(-2px);
+}

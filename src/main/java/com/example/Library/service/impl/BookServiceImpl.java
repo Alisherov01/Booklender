@@ -1,6 +1,7 @@
 package com.example.Library.service.impl;
 
 import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.BookSaveDTO;
 import com.example.Library.entity.Book;
 import com.example.Library.repository.BookRepository;
 import com.example.Library.service.BookService;
@@ -58,6 +59,17 @@ public class BookServiceImpl implements BookService {
         return toDto(bookRepository.save(book));
     }
 
+    @Override
+    public BookSaveDTO saveNewBook(BookSaveDTO dto) {
+        Book book = new Book();
+        book.setAuthor(dto.getAuthor());
+        book.setDescription(dto.getDescription());
+        book.setGenre(dto.getGenre());
+        book.setName(dto.getName());
+        bookRepository.save(book);
+        return dto;
+    }
+
     //??
     @Override
     public BookDTO update(Book book) {
@@ -65,10 +77,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public String deleteById(Long id) {
         Book book = bookRepository.findById(id).get();
         book.setRemoveDate(LocalDate.now());
         bookRepository.save(book);
+        return book.getName();
     }
 
     @Override
@@ -84,7 +97,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<String> getReadingBooksByUserId(Long id) {
+    public List<Book> getReadingBooksByUserId(Long id) {
         return bookRepository.getReadingBooksByUserId(id);
 
     }

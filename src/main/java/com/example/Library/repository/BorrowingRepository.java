@@ -14,6 +14,8 @@ public interface BorrowingRepository extends JpaRepository<Borrowing,Long> {
     @Query(value = "select count(book_id) from borrowings where user_id = ?1 and return_date is null", nativeQuery = true)
     int countBookByUserId(Long id);
 
+    Borrowing findByUserIdAndBook_IdAAndAndReturnDateIsNull(Long userId, Long bookId);
+
 
 
 }

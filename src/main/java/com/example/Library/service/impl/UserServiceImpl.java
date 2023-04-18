@@ -3,11 +3,13 @@ package com.example.Library.service.impl;
 
 import com.example.Library.dto.UserDTO;
 import com.example.Library.dto.UserDTOforList;
+import com.example.Library.dto.UserSaveDTO;
 import com.example.Library.entity.User;
+import com.example.Library.enums.Roles;
 import com.example.Library.repository.UserRepository;
 import com.example.Library.service.UserService;
-import com.example.Library.service.impl.BookServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,12 +22,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BookServiceImpl bookServiceImpl;
 
+    private PasswordEncoder passwordEncoder;
+
     private UserDTO toDto(User user) {
         return new UserDTO(
                 user.getId(),
                 user.getFullName(),
                 user.getEmail(),
-                user.getUserName(),
+                user.getLogin(),
                 user.getPassword(),
                 user.getAuthStatus(),
                 user.getBorrowings());
@@ -66,6 +70,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO update(User user) {
         return toDto(userRepository.save(user));
+    }
+
+    @Override
+    public UserSaveDTO saveForReg(UserSaveDTO dto){
+
+        User user = new User();
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setLogin(dto.getLogin());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setRole(Roles.USER);
+        userRepository.save(user);
+        return dto;
     }
 
     @Override

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/addBookStyle.css">
+    <title>Forms</title>
+</head>
+<body>
+        <h2 id="title">Добавить новую книгу.</h2>
+
+            <form th:method="GET" th:action="@{/addNewBook}" th:object="${dto}">
+
+            <label for="author" id="author-label" class="lab">Автор</label><br>
+            <input type="text" th:field="*{author}" id="author" class="inputl" name="author" placeholder="Enter your author" required><br>
+
+                <label for="description" id="description-label" class="lab">Описание</label><br>
+                <input type="text" th:field="*{description}" id="description" class="inputl" name="description" placeholder="Description" required><br>
+
+                <label for="name" id="name-label" class="lab">Название книги</label><br>
+                <input type="text" th:field="*{name}" id="name" class="inputl" name="author" placeholder="Name" required><br>
+<!--            <label for="shortDescription" id="shortDescription-label" class="lab">Краткое описание</label><br>-->
+<!--            <input type="int" th:field="*{description}" id="shortDescription" class="inputl" name="shortDescription" placeholder="Enter your shortDescription" required><br>-->
+
+<!--            <label for="nameOfBook" id="nameOfBook-label" class="lab">Название книги</label><br>-->
+<!--            <input type="int" th:field="*{name}" id="nameOfBook" class="inputl" name="nameOfBook" placeholder="Enter your nameOfBook" required><br>-->
+
+
+            <label for="genre" id="genre-label" class="lab">Жанр</label><br>
+            <input type="text" th:field="*{genre}" id="genre" class="inputl" name="genre" placeholder="Enter your genre" required><br>
+
+
+<!--            <br>-->
+<!--            <br>-->
+                <button type="submit" id="submit" >Submit</button>
+            </form>
+
+
+<!--     -->
+
+
+
+    </main>
+</body>
+</html>

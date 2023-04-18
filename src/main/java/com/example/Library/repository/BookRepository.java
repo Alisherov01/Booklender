@@ -27,8 +27,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     List<String> getAllBooksByUserId(Long userId);
 
     //книги пользователя, которые он читает (но еще не вернул обратно)
-    @Query(value = "select distinct name from books join borrowings on books.id = borrowings.book_id where borrowings.user_id = ?1 and borrowings.return_date is null", nativeQuery = true)
-    List<String> getReadingBooksByUserId(Long userId);
+    @Query(value = "select distinct * from books join borrowings on books.id = borrowings.book_id where borrowings.user_id = ?1 and borrowings.return_date is null", nativeQuery = true)
+    List<Book> getReadingBooksByUserId(Long userId);
 
 
 
