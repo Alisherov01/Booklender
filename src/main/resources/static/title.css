@@ -86,10 +86,11 @@ body{
 }
 .li{
     font-size: 20px;
+
     color: #363636;
     margin: 10px;
     padding: 20px;
-    background-color: #d20c89;
+    background-color: #D58A94;
     border-radius: 10px;
     box-shadow: 5px 5px 5px #333333;
     text-align: center;
@@ -122,3 +123,22 @@ body{
 .button-reg:hover{
     background-color: #690a41;
 }
+table{
+    font-family: sans-serif;
+    text-align: center;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 5px;
+    background-color: #FBD5AB;
+    border: 16px solid #921e5f;
+    border-radius: 20px;
+    table-layout: fixed;
+}
+th{
+    font-size: 18px;
+    padding: 10px 20px;
+}
+/*td{*/
+/*    background: #6e6a6a;*/
+/*    padding: 10px;*/
+/*}*/

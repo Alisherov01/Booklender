@@ -126,13 +126,7 @@ public class ThController {
     public String takeBook(@PathVariable("id2") Long userId,
                            @PathVariable("id3") Long bookId,
                            Model model){
-//        User user = new User();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (!(auth instanceof AnonymousAuthenticationToken)) {
-//            UserDetails userDetails = (UserDetails) auth.getPrincipal();
-//           user = userRepository.findByLogin(userDetails.getUsername());
-//        }
-//        model.addAttribute("userIsuser",user);
+
         borrowingService.takeBook(userId,bookId);
         return "cabAllBooks";
     }

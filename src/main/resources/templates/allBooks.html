@@ -22,7 +22,7 @@
   <div class="container">
     <div class="header-line">
       <div class="header-logo">
-        <img src="books.png" alt="" width="150" height="150">
+<!--        <img src="books.png" alt="" width="150" height="150">-->
       </div>
 
       <div class="nav">
@@ -33,9 +33,9 @@
       </div>
 
       <div class="cart">
-        <a href="@">
-          <img class="cart-img" src="whitecart.png" width="30" height="30">
-        </a>
+<!--        <a href="@">-->
+<!--          <img class="cart-img" src="whitecart.png" width="30" height="30">-->
+<!--        </a>-->
       </div>
 
       <div class="phone">
@@ -44,15 +44,16 @@
         <div class="phone-holder">
           <div class="phone-image">
             <a href="@">
-              <img src="whitephone.png" width="30" height="30">
+<!--              <img src="whitephone.png" width="30" height="30">-->
             </a>
           </div>
 
-          <div class="number">+996 552 778 445</div>
+<!--          <div class="number">+996 552 778 445</div>-->
         </div>
 
 
-        <div class="phone-text">Связаться с библиотекой</div>
+<!--        <div class="phone-text">Связаться с библиотекой</div>-->
+        <a class="nav-item" href="/email">Связаться с библиотекой</a>
       </div>
 
       <div class="btn">
@@ -82,7 +83,7 @@
             <th>Автор</th>
             <th>Жанр</th>
             <th>Название</th>
-            <th>Читать</th>
+            <th>Краткое описание</th>
           </tr>
           </thead>
           <tbody>
@@ -90,8 +91,9 @@
             <td class="li" th:text="${book.getAuthor().toString()}"></td>
             <td class="li" th:text="${book.getGenre().toString()}"></td>
             <td class="li" th:text="${book.getName().toString()}"></td>
-            <td><a class="button" th:href="@{/edit/{id}(id=${book.getId()})}">Удалить</a></td>
-            <td><a class="button" th:href="@{/delete/{id}(id=${book.getId()})}">Читать</a></td>
+              <td class="li" th:text="${book.getDescription().toString()}"></td>
+<!--            <td><a class="button" th:href="@{/edit/{id}(id=${book.getId()})}">Удалить</a></td>-->
+<!--            <td><a class="button" th:href="@{/delete/{id}(id=${book.getId()})}">Читать</a></td>-->
           </tr>
           </tbody>
         </table>
