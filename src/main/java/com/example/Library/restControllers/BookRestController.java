@@ -24,9 +24,10 @@ public class BookRestController {
         return bookService.getAll();
     }
 
-    @PostMapping("/update")
-    public BookDTO update(@RequestBody Book book) {
-        return bookService.update(book);
+    @PostMapping("/update/{id}")
+    public BookDTO update(@PathVariable Long id,
+            @RequestBody BookDTO book) {
+        return bookService.update(id, book);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -40,7 +41,7 @@ public class BookRestController {
     }
 
     @GetMapping("/getFree")
-    public List<BookDTO> getAllFreeBook() {
+    public List<Book> getAllFreeBook() {
         return bookService.getFreeBooks();
     }
 

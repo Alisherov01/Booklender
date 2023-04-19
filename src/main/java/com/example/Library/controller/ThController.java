@@ -35,7 +35,7 @@ public class ThController {
     BorrowingService borrowingService;
     UserRepository userRepository;
 
-    @Autowired
+
     AuthenticationManager authenticationManager;
 
     @GetMapping("/allBooks")
@@ -97,7 +97,7 @@ public class ThController {
 
     @GetMapping("/cabAllBooks")
     public String cabAllBooks(Model model){
-        List<BookDTO> books = bookService.getAll();
+        List<Book> books = bookService.getFreeBooks();
         model.addAttribute("books",books);
 
         User user = new User();

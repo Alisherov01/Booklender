@@ -3,6 +3,7 @@ package com.example.Library.service.impl;
 import com.example.Library.dto.BookDTO;
 import com.example.Library.dto.BookSaveDTO;
 import com.example.Library.entity.Book;
+import com.example.Library.enums.Status;
 import com.example.Library.repository.BookRepository;
 import com.example.Library.service.BookService;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class BookServiceImpl implements BookService {
                 book.getAuthor(),
                 book.getVendorCode(),
                 book.getGenre(),
+                book.getStatus(),
                 book.getBorrowings());
     }
 
@@ -65,6 +67,7 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(dto.getAuthor());
         book.setDescription(dto.getDescription());
         book.setGenre(dto.getGenre());
+        book.setStatus(Status.AVAILABLE);
         book.setName(dto.getName());
         bookRepository.save(book);
         return dto;
@@ -72,8 +75,19 @@ public class BookServiceImpl implements BookService {
 
     //??
     @Override
-    public BookDTO update(Book book) {
-        return toDto(bookRepository.save(book));
+    public BookDTO update(Long id, BookDTO dto) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null) {
+            book.setName(dto.getName());
+            book.setDescription(dto.getDescription());
+            book.setGenre(dto.getGenre());
+            book.setVendorCode(dto.getVendorCode());
+            book.setAuthor(dto.getAuthor());
+            book.setBorrowings(dto.getBorrowings());
+
+            bookRepository.save(book);
+        }
+        return toDto(book);
     }
 
     @Override
@@ -84,16 +98,23 @@ public class BookServiceImpl implements BookService {
         return book.getName();
     }
 
-    @Override
-    public List<BookDTO> getFreeBooks() {
-        List<Book> books = bookRepository.getFreeBooks();
-        List<BookDTO> bookDTOs = new ArrayList<>();
+//    @Override
+//    public List<BookDTO> getFreeBooks() {
+//        List<Book> books = bookRepository.getFreeBooks();
+//        List<BookDTO> bookDTOs = new ArrayList<>();
+//
+//        for (Book book : books) {
+//            BookDTO dto = toDto(book);
+//            bookDTOs.add(dto);
+//        }
+//        return bookDTOs;
+//    }
 
-        for (Book book : books) {
-            BookDTO dto = toDto(book);
-            bookDTOs.add(dto);
-        }
-        return bookDTOs;
+
+    @Override
+    public List<Book> getFreeBooks() {
+        List<Book> books = bookRepository.findAllByStatusAvailable();
+        return books;
     }
 
     @Override
