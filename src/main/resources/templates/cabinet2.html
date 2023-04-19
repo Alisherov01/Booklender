@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
 <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <link rel="stylesheet" href="../static/style.css" th:href="style.css">
+    <link rel="stylesheet" href="../static/newForCab.css" th:href="newForCab.css">
     <title>Document</title>
 </head>
 <body>
     <div class="container">
         <div class="admin">
-            <h1>ДОБРО ПОЖАЛОВАТЬ<br> АДМИН</h1>
+            <h1>ДОБРО ПОЖАЛОВАТЬ<br>
+                <h1 th:text="${userForCab.getFullName()}"></h1>
+                </h1>
 
         </div>
         <div class="buttons">
@@ -22,8 +24,9 @@
 
             <button class="button-66">Список читателей</button>
 
+<!--            <li th:if="${userForCab.getRole().equals('ADMIN')}">-->
             <form action="/newBook">
-                <button class="button-66">Добавить книгу</button></form>
+                <button th:if="${userForCab.getRole().toString().equals('ADMIN')}" class="button-66">Добавить книгу</button></form>
 
             <form action="/readingBooks">
                 <button class="button-66">Личные книги</button></form>

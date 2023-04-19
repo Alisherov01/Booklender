@@ -35,6 +35,7 @@
             <td class="li" th:text="${book.getName().toString()}"></td>
 <!--            <div th:object="userIsUser2">-->
             <td><a class="button" th:href="@{/takeBook/{id2}/{id3}(id2=${userIsUser2.getId()},id3=${book.getId()})}">Взять книгу</a></td>
+
             <td><a class="button" th:href="@{/deleteBook/{id}(id=${book.getId()})}">Удалить</a></td>
           </tr>
           </tbody>

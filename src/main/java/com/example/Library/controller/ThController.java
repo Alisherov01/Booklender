@@ -2,12 +2,14 @@ package com.example.Library.controller;
 
 import com.example.Library.dto.BookDTO;
 import com.example.Library.dto.BookSaveDTO;
+import com.example.Library.dto.EmailDto;
 import com.example.Library.dto.UserSaveDTO;
 import com.example.Library.entity.Book;
 import com.example.Library.entity.User;
 import com.example.Library.repository.UserRepository;
 import com.example.Library.service.BookService;
 import com.example.Library.service.BorrowingService;
+import com.example.Library.service.DefaultEmailService;
 import com.example.Library.service.UserService;
 import lombok.AllArgsConstructor;
 import org.apache.catalina.Session;
@@ -24,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class ThController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+    DefaultEmailService emailService;
 
     @GetMapping("/allBooks")
     public String allBooks(Model model)throws Exception{
@@ -55,7 +59,14 @@ public class ThController {
         return "authentification";
     }
     @GetMapping("/auth/success")
-    public String log(){
+    public String log(Model model){
+        User user = new User();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            user = userRepository.findByLogin(userDetails.getUsername());
+        }
+        model.addAttribute("userForCab",user);
 
 
         return "cabinet2";
@@ -155,6 +166,19 @@ public class ThController {
                              @PathVariable("bookId") Long bookId){
         borrowingService.returnBookByUser(userId,bookId);
         return "cabinet2";
+    }
+
+    @GetMapping("/email")
+    public String email(@ModelAttribute("dto")EmailDto dto,
+                            Model model){
+        return "email";
+    }
+
+    @GetMapping("/email/send")
+    public String sendEmail(@ModelAttribute("dto")EmailDto dto,
+                            Model model){
+        emailService.sendSimpleEmail("azamatomurkulov01@gmail.com", dto.getSender(), dto.getMessage());
+        return "email";
     }
 
 

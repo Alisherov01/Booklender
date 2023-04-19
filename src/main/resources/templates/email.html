@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet' href="../static/email.css" th:href="email.css">
+    <title>Title</title>
+</head>
+<body>
+<h1 class="regtitle" id="title">Обратная связь.</h1>
+
+<form th:method="GET" th:action="@{/email/send}" th:object="${dto}">
+    <p>
+    <label for="email">Ваш e-mail:</label>
+      <input type="text" th:field="*{sender}"  class="inputl" id="email" placeholder="Введите свой e-mail"><br></p>
+
+ <p>
+    <label for="msg" >Ваше сообщение:</label><br>
+  <textarea name="" id="msg" th:field="*{message}" class="inputl" cols="35" rows="15"></textarea><br>
+
+  <input type="submit" class="sign-button" value="Отправить сообщение">
+
+    <a class="nav-item" href="/main">На главную</a></p>
+</form>
+
+</body>
+</html>

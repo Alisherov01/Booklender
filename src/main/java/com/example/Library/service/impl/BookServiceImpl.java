@@ -83,6 +83,22 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
         return book.getName();
     }
+//
+//    @Override
+//    public List<BookDTO> getFreeBooks() {
+//        List<Book> books = bookRepository.getFreeBooks();
+//        List<BookDTO> bookDTOs = new ArrayList<>();
+//
+//        for (Book book : books) {
+//            if(book.getRemoveDate() == null){
+//                BookDTO dto = toDto(book);
+//                bookDTOs.add(dto);
+//            }
+//
+//        }
+//        return bookDTOs;
+//    }
+
 
     @Override
     public List<BookDTO> getFreeBooks() {

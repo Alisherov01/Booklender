@@ -1,0 +1,89 @@
+body{
+    background: url("1722.jpg");
+    background-size: cover;
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    position: relative;
+    margin-left: 300px;
+    margin-right: 300px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    color: #FFF;
+    border-radius: 5px;
+    min-width: 750px;
+    max-width: 750px;
+    box-sizing: border-box;
+}
+
+.regtitle{
+    font-size: 30px;
+    color: #ffffff;
+    margin: 10px;
+    padding: 14px 18px;
+    background-color: #d20c89;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #333333;
+    text-align: center;
+}
+
+.inputl {
+    border: 0;
+    background: white;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 3px solid #800000;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: #333333;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+.inputl:focus,.inputl:focus{
+    width: 280px;
+    border-color: #008B8B;
+
+}
+
+.sign-button{
+    border: 0;
+    background: #00FFFF;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #008B8B;
+    padding: 14px 40px;
+
+    outline: none;
+    color: #333333;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.sign-button:hover{
+    background: #008B8B;
+}
+
+.nav-item{
+    background-color: #9d1c7b;
+    color: white;
+    text-decoration: none;
+    border: 2px solid #A52A2A;
+    margin: 20px auto;
+
+    padding: 14px 18px;
+    border-radius: 20px;
+
+    transition: background-color 0.2s linear;
+}
+.nav-item:hover {
+    background-color: #631948;
+}
