@@ -1,5 +1,6 @@
 package com.example.Library.entity;
 
+import com.example.Library.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -22,6 +23,8 @@ public class Book {
     private String description;
     private String vendorCode;
     private String genre;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "book")

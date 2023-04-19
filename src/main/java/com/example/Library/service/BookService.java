@@ -13,9 +13,9 @@ public interface BookService {
     Book getByIdEntity(Long id);
     List<BookDTO> getAll();
     BookDTO create(Book book);
-    BookDTO update(Book book);
+    BookDTO update(Long id , BookDTO dto);
     String deleteById(Long id);
-    List<BookDTO> getFreeBooks();
+    List<Book> getFreeBooks();
     List<Book> getReadingBooksByUserId(Long id);
     List<String> getAllBooksByUserId(Long id);
     BookSaveDTO saveNewBook(BookSaveDTO dto);
