@@ -1,6 +1,6 @@
 package com.example.Library.controller;
 
-import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.BookDto;
 import com.example.Library.dto.BookSaveDTO;
 import com.example.Library.dto.UserSaveDTO;
 import com.example.Library.entity.Book;
@@ -10,10 +10,7 @@ import com.example.Library.service.BookService;
 import com.example.Library.service.BorrowingService;
 import com.example.Library.service.UserService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.Banner;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -40,7 +37,7 @@ public class ThController {
 
     @GetMapping("/allBooks")
     public String allBooks(Model model)throws Exception{
-        List<BookDTO> books = bookService.getAll();
+        List<BookDto> books = bookService.getAll();
         model.addAttribute("books",books);
         return "allBooks";
 
@@ -97,7 +94,7 @@ public class ThController {
 
     @GetMapping("/cabAllBooks")
     public String cabAllBooks(Model model){
-        List<Book> books = bookService.getFreeBooks();
+        List<BookDto> books = bookService.getFreeBooks();
         model.addAttribute("books",books);
 
         User user = new User();
@@ -153,7 +150,7 @@ public class ThController {
     @GetMapping("/returnBook/{userId}/{bookId}")
     public String returnBook(@PathVariable("userId") Long userId,
                              @PathVariable("bookId") Long bookId){
-        borrowingService.returnBookByUser(userId,bookId);
+        borrowingService.returnBook(userId,bookId);
         return "cabinet2";
     }
 

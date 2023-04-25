@@ -1,64 +1,47 @@
 package com.example.Library.service.impl;
 
-import com.example.Library.dto.BookDTO;
+import com.example.Library.dto.BookDto;
 import com.example.Library.dto.BookSaveDTO;
 import com.example.Library.entity.Book;
 import com.example.Library.enums.Status;
+import com.example.Library.mapper.BookMapper;
 import com.example.Library.repository.BookRepository;
 import com.example.Library.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-
-    private BookDTO toDto(Book book) {
-        return new BookDTO(
-                book.getId(),
-                book.getName(),
-                book.getDescription(),
-                book.getAuthor(),
-                book.getVendorCode(),
-                book.getGenre(),
-                book.getStatus(),
-                book.getBorrowings());
-    }
+    private final BookMapper mapper;
 
     @Override
-    public BookDTO getById(Long id) {
+    public BookDto getById(Long id) {
         Book book = bookRepository.findById(id).get();
-        return toDto(book);
+        if (book.getRemoveDate() == null) {
+            return mapper.map(book);
+        }
+        return null;
     }
 
     @Override
-    public Book getByIdEntity(Long id) {
-        Book book = bookRepository.findById(id).get();
-        return book;
+    public List<BookDto> getAll() {
+        List<Book> books = bookRepository.findAll()
+                .stream()
+                .filter(book -> book.getRemoveDate() == null)
+                .collect(Collectors.toList());
+        return mapper.map(books);
     }
 
     @Override
-    public List<BookDTO> getAll() {
-        List<Book> books = bookRepository.findAll();
-        List<BookDTO> bookDTOs = new ArrayList<>();
-
-        for (Book book : books) {
-            if(book.getRemoveDate() == null) {
-            BookDTO dto = toDto(book);
-            bookDTOs.add(dto);
-        }}
-        return bookDTOs;
-    }
-
-    //??
-    @Override
-    public BookDTO create(Book book) {
-        return toDto(bookRepository.save(book));
+    public BookDto create(BookDto dto) {
+        Book book = bookRepository.save(mapper.map(dto));
+        return mapper.map(book);
     }
 
     @Override
@@ -73,9 +56,8 @@ public class BookServiceImpl implements BookService {
         return dto;
     }
 
-    //??
     @Override
-    public BookDTO update(Long id, BookDTO dto) {
+    public BookDto update(Long id, BookDto dto) {
         Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {
             book.setName(dto.getName());
@@ -84,10 +66,11 @@ public class BookServiceImpl implements BookService {
             book.setVendorCode(dto.getVendorCode());
             book.setAuthor(dto.getAuthor());
             book.setBorrowings(dto.getBorrowings());
+            book.setStatus(dto.getStatus());
 
             bookRepository.save(book);
         }
-        return toDto(book);
+        return mapper.map(book);
     }
 
     @Override
@@ -98,23 +81,10 @@ public class BookServiceImpl implements BookService {
         return book.getName();
     }
 
-//    @Override
-//    public List<BookDTO> getFreeBooks() {
-//        List<Book> books = bookRepository.getFreeBooks();
-//        List<BookDTO> bookDTOs = new ArrayList<>();
-//
-//        for (Book book : books) {
-//            BookDTO dto = toDto(book);
-//            bookDTOs.add(dto);
-//        }
-//        return bookDTOs;
-//    }
-
-
     @Override
-    public List<Book> getFreeBooks() {
+    public List<BookDto> getFreeBooks() {
         List<Book> books = bookRepository.findAllByStatusAvailable();
-        return books;
+        return mapper.map(books);
     }
 
     @Override
