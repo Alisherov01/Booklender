@@ -73,6 +73,11 @@ public class BookServiceImpl implements BookService {
         return dto;
     }
 
+    @Override
+    public List<Book> getAllBooksByUserIdHistory(Long userId) {
+        return bookRepository.getAllBooksByUserIdHistory(userId);
+    }
+
     //??
     @Override
     public BookDTO update(Long id, BookDTO dto) {
@@ -94,6 +99,7 @@ public class BookServiceImpl implements BookService {
     public String deleteById(Long id) {
         Book book = bookRepository.findById(id).get();
         book.setRemoveDate(LocalDate.now());
+        book.setStatus(Status.DELETED);
         bookRepository.save(book);
         return book.getName();
     }

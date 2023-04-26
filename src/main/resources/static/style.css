@@ -9,7 +9,7 @@
 }
 body{
   background-image: url('1722.jpg');
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: cover;
   height: 100vh;
   font-family: 'Caveat', cursive;

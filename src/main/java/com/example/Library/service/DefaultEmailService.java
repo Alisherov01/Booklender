@@ -18,6 +18,7 @@ public class DefaultEmailService {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toAddress);
         simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setFrom(subject);
         simpleMailMessage.setText(message);
         emailSender.send(simpleMailMessage);
     }

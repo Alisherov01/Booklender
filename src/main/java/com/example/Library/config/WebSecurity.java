@@ -2,7 +2,6 @@ package com.example.Library.config;
 
 
 import com.example.Library.enums.Permission;
-import com.example.Library.enums.Roles;
 import com.example.Library.security.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +48,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers("/main","/allBooks","/registration","/registration/save","/email","/email/send").permitAll()
-                .antMatchers(HttpMethod.GET).hasAuthority(Permission.ADMIN_READ.getPermission())
+                .antMatchers(HttpMethod.GET,"/auth/success").hasAuthority(Permission.ADMIN_READ.getPermission())
                 .antMatchers(HttpMethod.POST).permitAll()
 //                .antMatchers(HttpMethod.DELETE).hasAuthority(Permission.ADMIN_UPDATE.getPermission())
 //                .antMatchers(HttpMethod.PUT).hasAuthority(Permission.ADMIN_UPDATE.getPermission())

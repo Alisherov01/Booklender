@@ -1,9 +1,6 @@
 package com.example.Library.controller;
 
-import com.example.Library.dto.BookDTO;
-import com.example.Library.dto.BookSaveDTO;
-import com.example.Library.dto.EmailDto;
-import com.example.Library.dto.UserSaveDTO;
+import com.example.Library.dto.*;
 import com.example.Library.entity.Book;
 import com.example.Library.entity.User;
 import com.example.Library.repository.UserRepository;
@@ -12,10 +9,7 @@ import com.example.Library.service.BorrowingService;
 import com.example.Library.service.DefaultEmailService;
 import com.example.Library.service.UserService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.Banner;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -26,7 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.List;
 
@@ -37,6 +31,7 @@ public class ThController {
     UserService readerService;
     BorrowingService borrowingService;
     UserRepository userRepository;
+    UserService userService;
 
 
     AuthenticationManager authenticationManager;
@@ -69,7 +64,7 @@ public class ThController {
         model.addAttribute("userForCab",user);
 
 
-        return "cabinet2";
+        return "cabinet";
     }
 
     @GetMapping("/registration")
@@ -82,6 +77,8 @@ public class ThController {
     public String regSave(@ModelAttribute("dto") UserSaveDTO dto, Model model) throws Exception{
         readerService.saveForReg(dto);
         model.addAttribute("readerName",dto.getFullName());
+        model.addAttribute("login",dto.getLogin());
+        model.addAttribute("password",dto.getPassword());
         return "regdone";
     }
     @GetMapping("/auth/logout")
@@ -96,7 +93,7 @@ public class ThController {
 
     @GetMapping("/newBook")
     public String newBook(@ModelAttribute("dto")BookSaveDTO dto, Model model){
-        return "adminAddBook";
+        return "adminAddBook2";
     }
 
     @GetMapping("/addNewBook")
@@ -128,7 +125,9 @@ public class ThController {
                            Model model){
 
         borrowingService.takeBook(userId,bookId);
-        return "cabAllBooks";
+        Book book = bookService.getByIdEntity(bookId);
+        model.addAttribute("bookName", book.getName());
+        return "bookTaken";
     }
 
     @GetMapping("/deleteBook/{id}")
@@ -159,7 +158,7 @@ public class ThController {
     public String returnBook(@PathVariable("userId") Long userId,
                              @PathVariable("bookId") Long bookId){
         borrowingService.returnBookByUser(userId,bookId);
-        return "cabinet2";
+        return "cabinet";
     }
 
     @GetMapping("/email")
@@ -173,6 +172,31 @@ public class ThController {
                             Model model){
         emailService.sendSimpleEmail("azamatomurkulov01@gmail.com", dto.getSender(), dto.getMessage());
         return "email";
+    }
+
+    @GetMapping("/userList")
+    public String listOfUsers(
+                        Model model){
+        List<UserDTOforList> usersDto = userService.getAllBooksOfAllUsers();
+        model.addAttribute("users",usersDto);
+        return "listOfUser";
+    }
+
+    @GetMapping("/history")
+    public String historyOfBooks(
+            Model model){
+
+        User user = new User();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            user = userRepository.findByLogin(userDetails.getUsername());
+        }
+
+        List<Book> books = bookService.getAllBooksByUserIdHistory(user.getId());
+        model.addAttribute("books",books);
+
+        return "historyOfBooks";
     }
 
 

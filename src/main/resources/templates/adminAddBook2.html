@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <link rel="stylesheet" href="../static/addBooks.css">-->
+    <title>Добавить книгу</title>
+
+    <style>
+        body{
+            background-image: url('1722.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            font-family: 'Caveat', cursive;
+            display: flex;
+            margin: auto;
+            justify-content: center;
+
+
+        }
+
+        .input{
+            background-color: #9d1c7b;
+            color: white;
+            text-decoration: none;
+            border: 2px solid #A52A2A;
+            font-weight: 900;
+            font-size: 15px;
+            margin: 10px auto;
+            padding: 14px 18px;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+
+            <form th:method="GET" th:action="@{/addNewBook}" th:object="${dto}">
+                <h2 id="title" class="lab">Добавить новую книгу.</h2>
+
+            <label for="author" id="author-label" class="lab">Автор</label><br>
+            <input type="text" th:field="*{author}" id="author" class="input" name="author" placeholder="Enter your author" required><br>
+
+
+                <label for="name" id="name-label" class="lab">Название книги</label><br>
+                <input type="text" th:field="*{name}" id="name" class="input" name="author" placeholder="Name" required><br>
+            <label for="shortDescription" id="shortDescription-label" class="lab">Краткое описание</label><br>
+            <input type="text" th:field="*{description}" id="shortDescription" class="input" name="shortDescription" placeholder="Enter your shortDescription" required><br>
+
+
+            <label for="genre" id="genre-label" class="lab">Жанр</label><br>
+            <input type="text" th:field="*{genre}" id="genre" class="input" name="genre" placeholder="Enter your genre" required><br>
+
+                <button type="submit" id="submit" class="input" >Добавить</button>
+            </form>
+
+
+
+</body>
+</html>

@@ -19,4 +19,5 @@ public interface BookService {
     List<Book> getReadingBooksByUserId(Long id);
     List<String> getAllBooksByUserId(Long id);
     BookSaveDTO saveNewBook(BookSaveDTO dto);
+    List<Book> getAllBooksByUserIdHistory(Long userId);
 }
