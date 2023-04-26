@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/LC.css" th:href="LC.scc">
+    <title>Личный кабинет</title>
+</head>
+<body>
+<header class="header">
+    <h1>ДОБРО ПОЖАЛОВАТЬ</h1>
+</header>
+    <div class="container">
+        <div class="buttons">
+
+            <button class="button-66">Список читателей</button>
+
+
+            <form action="/newBook">
+                <button class="button-66">Добавить книгу</button>
+            </form>
+            <form action="/cabAllBooks">
+                <button class="button-66">Список книг</button>
+            </form>
+
+            <form action="/readingBooks">
+                <button class="button-66">Личные книги</button>
+            </form>
+
+
+            <form action="/main">
+                <button class="button-66">На главную</button>
+            </form>
+
+
+            <form action="/auth/logout">
+                <button class="button-66">Выйти</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>
